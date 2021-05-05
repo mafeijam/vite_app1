@@ -1,0 +1,23 @@
+{
+  "name": "vite",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "preview": "PORT=8443 serve dist"
+  },
+  "dependencies": {
+    "vue": "^3.0.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.2.2",
+    "@vue/compiler-sfc": "^3.0.5",
+    "https-localhost": "^4.6.4",
+    "pug": "^3.0.2",
+    "quasar": "^2.0.0-beta.15",
+    "vite": "^2.2.3",
+    "vite-plugin-components": "^0.8.4",
+    "vite-plugin-pwa": "^0.7.3"
+  }
+}
