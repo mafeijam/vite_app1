@@ -20,6 +20,7 @@ export default defineConfig(() => {
       vue(),
       ViteComponents(),
       VitePWA({
+        strategies: 'injectManifest',
         manifest: {
           name: 'App',
           short_name: 'App'
