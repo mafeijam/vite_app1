@@ -32,6 +32,7 @@ const viteConfig = {
     ViteComponents(),
     VitePWA({
       // strategies: 'injectManifest',
+      registerType: 'autoUpdate',
       manifest: {
         name: 'App',
         short_name: 'App'
