@@ -4,6 +4,7 @@ import ViteComponents from 'vite-plugin-components'
 import { VitePWA, cachePreset } from 'vite-plugin-pwa'
 import dotenv from 'dotenv'
 import fs from 'fs'
+import path from 'path'
 
 dotenv.config({ path: './.env' })
 
@@ -13,9 +14,18 @@ const viteConfig = {
       https: {
         key: fs.readFileSync(process.env.KEY),
         cert: fs.readFileSync(process.env.CERT)
+      },
+      proxy: {
+        '/api': 'http://127.0.0.1:8000'
       }
     }
   } : {}),
+
+  resolve: {
+    alias: {
+      '~/': `${path.resolve(__dirname, 'src')}/`,
+    },
+  },
 
   plugins: [
     vue(),

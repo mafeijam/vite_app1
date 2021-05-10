@@ -1,5 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import router from './router'
+import store from './store'
 
 import { Quasar } from 'quasar'
 import 'quasar/dist/quasar.prod.css'
@@ -12,4 +14,6 @@ createApp(App)
   .use(Quasar, {
     iconSet
   })
+  .use(router)
+  .use(store)
   .mount('#app')

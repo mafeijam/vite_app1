@@ -1,24 +1,32 @@
 <template lang="pug">
-q-layout(view="hHh lpR fFf")
-  q-page-container.bg-blue-grey-1
-    q-page.q-mx-auto(padding style="width: 1280px;")
-      q-card.shadow-1
-        q-card-section testing sw {{ isSub }}
+div {{ user }}
+q-btn(label="logout" @click="logout" v-if="user")
+router-view
 
-        q-card-section(v-if="needRefresh")
-          q-btn(label="reload" icon="r_sync" @click="updateServiceWorker" color="primary")
+      //- q-card.shadow-1
+      //-   q-card-section testing sw {{ isSub }}
 
-        q-card-section
-          q-btn(label="unsub" @click="unsub" v-if="isSub")
-          q-btn(label="sub" @click="sub" v-else)
+      //-   q-card-section(v-if="needRefresh")
+      //-     q-btn(label="reload" icon="r_sync" @click="updateServiceWorker" color="primary")
+
+      //-   q-card-section
+      //-     q-btn(label="unsub" @click="unsub" v-if="isSub")
+      //-     q-btn(label="sub" @click="sub" v-else)
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { useStore, mapState } from 'vuex'
 import { useRegisterSW } from 'virtual:pwa-register/vue'
 
 export default {
   setup() {
+    const store = useStore()
+
+    // const auth = computed(() => store.state.auth.isLoggedIn)
+
+    const logout = () => store.dispatch('auth/logout')
+
     const {
       needRefresh,
       updateServiceWorker,
@@ -64,13 +72,19 @@ export default {
       }
     })
 
+    // axios.get('/api/ping').then(r => console.log(r.data))
+
     return {
       needRefresh,
       updateServiceWorker,
       sub,
       unsub,
-      isSub
+      isSub,
+      logout
     }
+  },
+  computed: {
+    ...mapState('auth', ['user'])
   }
 }
 </script>
