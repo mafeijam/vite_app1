@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '~/setup/axios'
 import router from '~/router'
 
 export default {
@@ -7,7 +7,8 @@ export default {
     return {
       booted: false,
       isLoggedIn: false,
-      user: null
+      user: null,
+      errors: null
     }
   },
   mutations: {
@@ -17,12 +18,15 @@ export default {
     },
     setBooted(state) {
       state.booted = true
+    },
+    setErrors(state, errors) {
+      state.errors = errors
     }
   },
   actions: {
     async boot({ commit }) {
       try {
-        const { data: user } = await axios.get('/api/me')
+        const { data: user } = await axios.get('/me')
         commit('setAuth', { isLoggedIn: true, user })
         commit('setBooted')
       } catch (e) {
@@ -31,15 +35,19 @@ export default {
     },
     async login({ commit }, credentials) {
       try {
-        const { data: user } = await axios.post('/api/login', credentials)
+        const { data: user } = await axios.post('/login', credentials)
         commit('setAuth', { isLoggedIn: true, user })
+        commit('setBooted')
         router.push('/')
-      } catch (e) {}
+      } catch (e) {
+        commit('setErrors', e.response.data)
+      }
     },
     async logout({ commit }) {
-      await axios.post('/api/logout')
+      await axios.post('/logout')
       commit('setAuth', { isLoggedIn: false, user: null })
       router.push('/login')
+      setTimeout(() => window.location.reload(), 100)
     }
   }
 }

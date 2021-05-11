@@ -1,3 +1,3 @@
 <template lang="pug">
-div index
+.main-card.q-pa-lg.text-blue-grey-3 index
 </template>

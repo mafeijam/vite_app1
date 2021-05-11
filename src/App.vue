@@ -1,6 +1,4 @@
 <template lang="pug">
-div {{ user }}
-q-btn(label="logout" @click="logout" v-if="user")
 router-view
 
       //- q-card.shadow-1

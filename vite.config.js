@@ -31,11 +31,22 @@ const viteConfig = {
     vue(),
     ViteComponents(),
     VitePWA({
-      // strategies: 'injectManifest',
       registerType: 'autoUpdate',
       manifest: {
         name: 'App',
-        short_name: 'App'
+        short_name: 'App',
+        icons: [
+          {
+            "src": "/pwa-196.png",
+            "sizes": "196x196",
+            "type": "image/png",
+          },
+          {
+            "src": "/pwa-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+          },
+        ]
       },
       workbox: {
         runtimeCaching: cachePreset,
