@@ -1,5 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
+
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
 .q-btn .q-icon {
   font-size: 1.3em;
+}
+
+.q-btn--fab .q-icon {
+  font-size: 1.6em;
 }
 
 .login-bg {
@@ -15,15 +25,14 @@
 }
 
 .bg-blur {
-  background-color: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(2px);
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px) saturate(0.8);
 }
 
 .login-card {
   max-width: 500px;
   width: 500px;
   height: fit-content;
-  margin-top: 8em;
   background-color: rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(8px);
 }

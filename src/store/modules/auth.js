@@ -35,6 +35,7 @@ export default {
     },
     async login({ commit }, credentials) {
       try {
+        await axios.get('/csrf-cookie')
         const { data: user } = await axios.post('/login', credentials)
         commit('setAuth', { isLoggedIn: true, user })
         commit('setBooted')
