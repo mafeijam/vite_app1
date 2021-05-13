@@ -51,7 +51,9 @@ const viteConfig = {
       },
       workbox: {
         runtimeCaching: cachePreset,
-        importScripts: ['sw-import.js']
+        importScripts: ['sw-import.js'],
+        skipWaiting: true,
+        clientsClaim: true,
       }
     })
   ],

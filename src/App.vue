@@ -16,6 +16,8 @@ export default {
       updateServiceWorker,
     } = useRegisterSW()
 
+    console.log(needRefresh.value)
+
     onMounted(() => {
       if (needRefresh.value) {
         $q.notify({

@@ -3,14 +3,14 @@
 body {
   font-family: 'Noto Sans TC', sans-serif;
 }
-
+/*
 .q-btn .q-icon {
-  font-size: 1.3em;
+  font-size: 1.6em;
 }
 
 .q-btn--fab .q-icon {
   font-size: 1.6em;
-}
+} */
 
 .login-bg {
   background-image: url('/login-bg2.jpg');

@@ -5,15 +5,15 @@ q-layout(view="hHh lpR fFf")
       q-avatar
         img.q-pa-xs(src="/code.svg")
       q-space
-      q-btn.q-mr-sm(icon="r_mail_outline" flat round dense color="grey-5")
-      q-btn(icon-right="r_expand_more" flat dense color="grey-5" :label="$store.state.auth.user.name")
+      q-btn.q-mr-xs(icon="r_mail_outline" flat round color="grey-5")
+      q-btn(icon-right="r_expand_more" flat color="grey-5" :label="$store.state.auth.user.name")
         q-menu.bg-blue-grey-10(anchor="bottom right" self="top right" :offset="[0, 6]" style="width: 200px;")
           q-item(tag="label" v-ripple v-if="!$q.platform.is.ios")
             q-item-section
               q-item-label.text-grey-5 接收通知
             q-item-section(side)
               q-toggle(v-model="subscription" color="orange-14" keep-color dense)
-          q-item(clickable v-ripple)
+          q-item(clickable v-ripple @click="logout")
             q-item-section
               q-item-label.text-grey-5 登出
             q-item-section(avatar)

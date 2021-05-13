@@ -4,7 +4,6 @@
   q-card.login-card.shadow-12(:class="$q.screen.gt.xs ? 'q-mt-xl' : 'q-my-auto'")
     .flex.justify-center(:class="$q.screen.gt.xs ? 'q-px-xl q-mt-xl' : 'q-px-lg q-mt-lg'")
       img(src="/code.svg" style="width: 80px;")
-    //- .text-h3.text-blue-grey-5.text-center(:class="$q.screen.gt.xs ? 'q-mt-xl' : 'q-mt-lg'") PWA
 
     q-card-section.q-pt-none(:class="$q.screen.gt.xs ? 'q-pa-xl' : 'q-pa-lg'")
       q-form(@submit.prevent="login" :class="$q.screen.gt.xs ? 'q-gutter-xl' : 'q-gutter-lg'")
@@ -24,9 +23,12 @@
             q-icon(name="r_lock")
 
         .row.justify-between
-          q-checkbox(v-model="form.remember" color="blue-grey-9" keep-color dense)
+          q-checkbox(v-model="form.remember" color="orange-14" keep-color dense)
             .text-grey-6.text-weight-medium.q-ml-sm 記住我
-          q-btn.text-weight-medium(label="登入" type="submit" color="blue-grey-10" text-color="blue-grey-3" icon="r_login" :loading="loading")
+          q-btn.text-weight-medium(
+            label="登入" type="submit" color="orange-14" text-color="grey-3"
+            icon-right="r_login" :loading="loading"
+          )
 
     q-card-section.text-teal-8.bg-info-trans(v-if="expired" :class="$q.screen.gt.xs ? 'q-pa-xl' : 'q-pa-lg'")
       .flex.items-center
