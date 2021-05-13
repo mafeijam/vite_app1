@@ -2,28 +2,52 @@
 q-layout(view="hHh lpR fFf")
   q-header.bg-grey-10(elevated )
     q-toolbar
-      img(src="/code.svg" style="width: 30px;")
+      q-avatar
+        img.q-pa-xs(src="/code.svg")
       q-space
-      q-btn.text-weight-medium(label="登出" text-color="blue-grey-4" icon="r_logout" flat @click="logout" :loading="loading")
+      q-btn.q-mr-sm(icon="r_mail_outline" flat round dense color="grey-5")
+      q-btn(icon-right="r_expand_more" flat dense color="grey-5" :label="$store.state.auth.user.name")
+        q-menu.bg-blue-grey-10(anchor="bottom right" self="top right" :offset="[0, 6]" style="width: 200px;")
+          q-item(tag="label" v-ripple v-if="!$q.platform.is.ios")
+            q-item-section
+              q-item-label.text-grey-5 接收通知
+            q-item-section(side)
+              q-toggle(v-model="subscription" color="orange-14" keep-color dense)
+          q-item(clickable v-ripple)
+            q-item-section
+              q-item-label.text-grey-5 登出
+            q-item-section(avatar)
+              q-icon(name="r_logout" color="orange-14")
 
   q-page-container.bg-blue-grey-10
     q-page.q-mx-auto(padding style="width: 1280px; max-width: 100%;")
       router-view
     q-page-sticky(position="bottom-right" :offset="[18, 18]")
-      q-fab(icon="r_widgets" direction="up" color="orange-9" text-color="grey-3")
+      q-fab(icon="r_widgets" direction="up" color="orange-14" text-color="grey-3")
         q-fab-action(icon="r_money" color="blue-7")
 </template>
 
 <script>
+import { computed, onMounted } from 'vue'
+import { useStore } from 'vuex'
 import { loading, dispatch } from '~/setup/useDispatch'
 
 export default {
   setup() {
+    const store = useStore()
+    const subscription = computed({
+      get: () => store.state.isSubscribed,
+      set: val => store.dispatch(val ? 'subscribe' : 'unsubscribe')
+    })
+
     const logout = () => dispatch('auth/logout')
+
+    onMounted(() => store.dispatch('checkPushSubscription'))
 
     return {
       logout,
-      loading
+      loading,
+      subscription
     }
   }
 }

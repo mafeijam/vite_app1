@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import Vue from '@vitejs/plugin-vue'
 import ViteComponents from 'vite-plugin-components'
 import { VitePWA, cachePreset } from 'vite-plugin-pwa'
 import dotenv from 'dotenv'
@@ -28,13 +28,14 @@ const viteConfig = {
   },
 
   plugins: [
-    vue(),
+    Vue(),
     ViteComponents(),
     VitePWA({
-      registerType: 'autoUpdate',
       manifest: {
         name: 'App',
         short_name: 'App',
+        background_color: '#CFD8DC',
+        theme_color: '#CFD8DC',
         icons: [
           {
             "src": "/pwa-196.png",

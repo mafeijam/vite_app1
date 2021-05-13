@@ -3,8 +3,8 @@
   .absolute-full.bg-blur
   q-card.login-card.shadow-12(:class="$q.screen.gt.xs ? 'q-mt-xl' : 'q-my-auto'")
     .flex.justify-center(:class="$q.screen.gt.xs ? 'q-px-xl q-mt-xl' : 'q-px-lg q-mt-lg'")
-      img(src="/code.svg" style="width: 60px;")
-    .text-h3.text-blue-grey-5.text-center(:class="$q.screen.gt.xs ? 'q-mt-xl' : 'q-mt-lg'") PWA
+      img(src="/code.svg" style="width: 80px;")
+    //- .text-h3.text-blue-grey-5.text-center(:class="$q.screen.gt.xs ? 'q-mt-xl' : 'q-mt-lg'") PWA
 
     q-card-section.q-pt-none(:class="$q.screen.gt.xs ? 'q-pa-xl' : 'q-pa-lg'")
       q-form(@submit.prevent="login" :class="$q.screen.gt.xs ? 'q-gutter-xl' : 'q-gutter-lg'")
