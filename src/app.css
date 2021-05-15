@@ -3,14 +3,6 @@
 body {
   font-family: 'Noto Sans TC', sans-serif;
 }
-/*
-.q-btn .q-icon {
-  font-size: 1.6em;
-}
-
-.q-btn--fab .q-icon {
-  font-size: 1.6em;
-} */
 
 .login-bg {
   background-image: url('/login-bg2.jpg');
@@ -53,4 +45,25 @@ body {
 .bg-info-trans {
   background-color: rgba(223, 242, 241, 0.1);
   backdrop-filter: blur(3px);
+}
+
+.slide-x-transition-enter-active,
+.slide-x-transition-leave-active {
+  transition: 0.3s cubic-bezier(.25, .8, .50, 1);
+}
+
+.slide-x-transition-enter-from,
+.slide-x-transition-leave-to {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }

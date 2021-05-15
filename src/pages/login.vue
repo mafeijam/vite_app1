@@ -24,10 +24,10 @@
 
         .row.justify-between
           q-checkbox(v-model="form.remember" color="orange-14" keep-color dense)
-            .text-grey-6.text-weight-medium.q-ml-sm 記住我
+            .text-grey-6.text-weight-medium.q-ml-sm 記住我 {{ cantSubmit }}
           q-btn.text-weight-medium(
-            label="登入" type="submit" color="orange-14" text-color="grey-3"
-            icon-right="r_login" :loading="loading"
+            label="登入" type="submit" color="orange-14" text-color="orange-1"
+            icon-right="r_login" :loading="loading" :disable="cantSubmit"
           )
 
     q-card-section.text-teal-8.bg-info-trans(v-if="expired" :class="$q.screen.gt.xs ? 'q-pa-xl' : 'q-pa-lg'")
@@ -54,17 +54,21 @@ export default {
     localStorage.removeItem('session_expired')
 
     const form = reactive({
-      email: '',
-      password: '',
-      remember: false
+      email: 'admin@jw.mini',
+      password: '123456',
+      remember: true
     })
 
     return {
       form,
       loading,
-      login: () => dispatch('auth/login', form),
-      errors: computed(() => store.state.auth.errors),
-      expired
+      expired,
+      errors: computed(() => store.state.errors),
+      cantSubmit: computed(() => !!form.email === false || !!form.password === false),
+      login: () => {
+        dispatch('auth/login', form)
+        expired.value = false
+      },
     }
   }
 }

@@ -22,5 +22,9 @@ export default [
     path: '/login',
     meta: { guest: true },
     component: () => import('~/pages/login.vue')
+  },
+  {
+    path: '/:404(.*)*',
+    component: () => import('~/pages/404error.vue')
   }
 ]

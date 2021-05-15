@@ -8,6 +8,11 @@ const client = axios.create({
   }
 })
 
+client.interceptors.request.use(config => {
+  store.commit('setErrors', null)
+  return config
+}, error => Promise.reject(error))
+
 client.interceptors.response.use(
   response => response,
   error => {

@@ -18,6 +18,7 @@ let lastPing = Date.now()
 
 router.beforeEach(async (to, from, next) => {
   const needAuth = to.matched.some(record => record.meta.auth)
+  const isGuest = to.matched.some(record => record.meta.guest)
 
   if (store.state.auth.booted === false && needAuth) {
     await store.dispatch('auth/boot')
@@ -29,7 +30,7 @@ router.beforeEach(async (to, from, next) => {
     return next('/login')
   }
 
-  if (to.matched.some(record => record.meta.guest) && isLoggedIn) {
+  if (isGuest && isLoggedIn) {
     return next('/')
   }
 

@@ -34,16 +34,16 @@ const viteConfig = {
       manifest: {
         name: 'App',
         short_name: 'App',
-        background_color: '#CFD8DC',
-        theme_color: '#CFD8DC',
+        background_color: '#212121',
+        theme_color: '#212121',
         icons: [
           {
-            "src": "/pwa-196.png",
+            "src": "/manifest-icon-192.png",
             "sizes": "196x196",
             "type": "image/png",
           },
           {
-            "src": "/pwa-512.png",
+            "src": "/manifest-icon-512.png",
             "sizes": "512x512",
             "type": "image/png",
           },
@@ -52,8 +52,6 @@ const viteConfig = {
       workbox: {
         runtimeCaching: cachePreset,
         importScripts: ['sw-import.js'],
-        skipWaiting: true,
-        clientsClaim: true,
       }
     })
   ],
