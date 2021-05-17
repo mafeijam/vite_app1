@@ -24,7 +24,7 @@
 
         .row.justify-between
           q-checkbox(v-model="form.remember" color="orange-14" keep-color dense)
-            .text-grey-6.text-weight-medium.q-ml-sm 記住我 {{ cantSubmit }}
+            .text-grey-6.text-weight-medium.q-ml-sm 記住我
           q-btn.text-weight-medium(
             label="登入" type="submit" color="orange-14" text-color="orange-1"
             icon-right="r_login" :loading="loading" :disable="cantSubmit"
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useStore } from 'vuex'
 import { loading, dispatch } from '~/setup/useDispatch'
 
@@ -50,7 +50,7 @@ export default {
   setup() {
     const store = useStore()
 
-    const expired = localStorage.getItem('session_expired')
+    const expired = ref(localStorage.getItem('session_expired'))
     localStorage.removeItem('session_expired')
 
     const form = reactive({

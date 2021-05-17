@@ -17,7 +17,7 @@ q-layout(view="hHh lpR fFf")
               q-item-label.text-grey-5 接收通知
             q-item-section(side)
               q-toggle(v-model="subscription" color="orange-14" keep-color dense)
-          q-item(clickable v-ripple @click="logout")
+          q-item(clickable v-ripple @click="logout" :disable="loading")
             q-item-section
               q-item-label.text-grey-5 登出
             q-item-section(avatar)

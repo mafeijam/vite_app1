@@ -19,8 +19,9 @@ let lastPing = Date.now()
 router.beforeEach(async (to, from, next) => {
   const needAuth = to.matched.some(record => record.meta.auth)
   const isGuest = to.matched.some(record => record.meta.guest)
+  const guestState = localStorage.getItem('guest', 'n') || 'n'
 
-  if (store.state.auth.booted === false && needAuth) {
+  if (guestState === 'n' && store.state.auth.booted === false) {
     await store.dispatch('auth/boot')
   }
 

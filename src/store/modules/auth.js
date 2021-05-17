@@ -4,7 +4,7 @@ import router from '~/router'
 const state = {
   booted: false,
   isLoggedIn: false,
-  user: null
+  user: { name: null }
 }
 
 const mutations = {
@@ -23,8 +23,10 @@ const actions = {
       const { data } = await axios.get('/me')
       commit('setAuth', { isLoggedIn: true, user: data.user })
       commit('setBooted')
+      localStorage.setItem('guest', 'n')
     } catch (e) {
       commit('setBooted')
+      localStorage.setItem('guest', 'y')
     }
   },
   async login({ commit }, credentials) {
@@ -33,15 +35,17 @@ const actions = {
       const { data } = await axios.post('/login', credentials)
       commit('setAuth', { isLoggedIn: true, user: data.user })
       commit('setBooted')
+      localStorage.setItem('guest', 'n')
       router.push('/')
     } catch (e) {
       commit('setErrors', e.response.data, { root: true })
+      localStorage.setItem('guest', 'y')
     }
   },
   async logout({ commit }) {
     await axios.post('/logout')
-    commit('setAuth', { isLoggedIn: false, user: null })
-    router.push('/login')
+    commit('setAuth', { isLoggedIn: false, user: { name: null } })
+    localStorage.setItem('guest', 'y')
     setTimeout(() => window.location.reload(), 100)
   }
 }
