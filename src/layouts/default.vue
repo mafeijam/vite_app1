@@ -5,8 +5,9 @@ q-layout(view="hHh lpR fFf")
       q-avatar.cursor-pointer(@click="$router.push('/')")
         img.q-pa-xs(src="/code.svg")
       q-space
-      q-btn.q-mr-xs(icon="r_mail_outline" flat round color="grey-5")
-      q-btn(icon="r_more_vert" flat round color="grey-5")
+      q-btn.q-mr-sm(icon="r_notifications" flat round dense color="grey-5" @click="drawer = !drawer")
+        q-badge(rounded floating color="orange-14" label="1")
+      q-btn(icon="r_more_vert" flat round dense color="grey-5")
         q-menu.bg-blue-grey-10(anchor="bottom right" self="top right" :offset="[0, 6]" style="width: 200px;")
           q-item
             q-item-section
@@ -23,8 +24,13 @@ q-layout(view="hHh lpR fFf")
             q-item-section(avatar)
               q-icon(name="r_logout" color="orange-14")
 
+  q-drawer.bg-blue-grey-1(v-model="drawer" :width="300" bordered side="right")
+    q-scroll-area.fit
+      .q-pa-md
+        div(v-for="i in 12") {{ i }}
+
   q-page-container.bg-grey-3
-    q-page.q-mx-auto(padding style="width: 1280px; max-width: 100%;")
+    q-page.q-mx-auto(padding style="width: 1380px; max-width: 100%;")
       transition(
         name="slide-x-transition"
         mode="out-in"
@@ -36,24 +42,27 @@ q-layout(view="hHh lpR fFf")
 </template>
 
 <script>
-import { computed, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
-import { loading, dispatch } from '~/setup/useDispatch'
+import { loading, callable } from '~/composable/useLoading'
 
 export default {
   setup() {
     const store = useStore()
+
+    const drawer = ref(false)
 
     const subscription = computed({
       get: () => store.state.isSubscribed,
       set: val => store.dispatch(val ? 'subscribe' : 'unsubscribe')
     })
 
-    const logout = () => dispatch('auth/logout')
+    const logout = () => callable(() => store.dispatch('auth/logout'))
 
     onMounted(() => store.dispatch('checkPushSubscription'))
 
     return {
+      drawer,
       logout,
       loading,
       subscription

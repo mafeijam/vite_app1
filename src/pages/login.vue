@@ -44,7 +44,7 @@
 <script>
 import { computed, reactive, ref } from 'vue'
 import { useStore } from 'vuex'
-import { loading, dispatch } from '~/setup/useDispatch'
+import { loading, callable } from '~/composable/useLoading'
 
 export default {
   setup() {
@@ -66,7 +66,7 @@ export default {
       errors: computed(() => store.state.errors),
       cantSubmit: computed(() => !!form.email === false || !!form.password === false),
       login: () => {
-        dispatch('auth/login', form)
+        callable(() => store.dispatch('auth/login', form))
         expired.value = false
       },
     }

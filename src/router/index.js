@@ -29,9 +29,7 @@ router.beforeEach(async (to, from, next) => {
 
   if (needAuth && !isLoggedIn) {
     return next('/login')
-  }
-
-  if (isGuest && isLoggedIn) {
+  } else if (isGuest && isLoggedIn) {
     return next('/')
   }
 

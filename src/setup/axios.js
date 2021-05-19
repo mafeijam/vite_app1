@@ -16,7 +16,7 @@ client.interceptors.request.use(config => {
 client.interceptors.response.use(
   response => response,
   error => {
-    if (error.response.status == 401 && store.state.auth.booted === true) {
+    if (error.response.status === 401 && store.state.auth.booted) {
       localStorage.setItem('session_expired', '登陸已超時')
 
       return window.location.reload()

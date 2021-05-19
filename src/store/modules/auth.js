@@ -1,6 +1,12 @@
 import axios from '~/setup/axios'
 import router from '~/router'
 
+function commitAuth(commit, data) {
+  commit('setAuth', { isLoggedIn: true, user: data.user })
+  commit('setBooted')
+  localStorage.setItem('guest', 'n')
+}
+
 const state = {
   booted: false,
   isLoggedIn: false,
@@ -21,9 +27,7 @@ const actions = {
   async boot({ commit }) {
     try {
       const { data } = await axios.get('/me')
-      commit('setAuth', { isLoggedIn: true, user: data.user })
-      commit('setBooted')
-      localStorage.setItem('guest', 'n')
+      commitAuth(commit, data)
     } catch (e) {
       commit('setBooted')
       localStorage.setItem('guest', 'y')
@@ -33,9 +37,7 @@ const actions = {
     try {
       await axios.get('/csrf-cookie')
       const { data } = await axios.post('/login', credentials)
-      commit('setAuth', { isLoggedIn: true, user: data.user })
-      commit('setBooted')
-      localStorage.setItem('guest', 'n')
+      commitAuth(commit, data)
       router.push('/')
     } catch (e) {
       commit('setErrors', e.response.data, { root: true })
