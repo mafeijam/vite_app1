@@ -7,6 +7,8 @@ function commitAuth(commit, data) {
   localStorage.setItem('guest', 'n')
 }
 
+const guestState = localStorage.getItem('guest') || 'n'
+
 const state = {
   booted: false,
   isLoggedIn: false,
@@ -24,7 +26,11 @@ const mutations = {
 }
 
 const actions = {
-  async boot({ commit }) {
+  async boot({ commit, state }) {
+    if (guestState === 'y' || state.booted) {
+      return
+    }
+
     try {
       const { data } = await axios.get('/me')
       commitAuth(commit, data)

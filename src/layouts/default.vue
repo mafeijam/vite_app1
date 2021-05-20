@@ -31,11 +31,12 @@ q-layout(view="hHh lpR fFf")
 
   q-page-container.bg-grey-3
     q-page.q-mx-auto(padding style="width: 1380px; max-width: 100%;")
-      transition(
-        name="slide-x-transition"
-        mode="out-in"
-      )
-        router-view
+      router-view(v-slot="{ Component }")
+        transition(
+          name="slide-x-transition"
+          mode="out-in"
+        )
+          component(:is="Component")
     q-page-sticky(position="bottom-right" :offset="[18, 18]")
       q-fab(icon="r_widgets" direction="up" color="orange-14" text-color="orange-1")
         q-fab-action(icon="r_money" color="blue-7" to="/bank")
