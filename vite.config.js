@@ -8,6 +8,36 @@ import path from 'path'
 
 dotenv.config({ path: './.env' })
 
+const manifest = {
+  name: 'App',
+  short_name: 'App',
+  background_color: '#212121',
+  theme_color: '#212121',
+  icons: [
+    {
+      src: "/manifest-icon-192.png",
+      sizes: "196x196",
+      type: "image/png",
+    },
+    {
+      src: "/manifest-icon-512.png",
+      sizes: "512x512",
+      type: "image/png",
+    },
+    {
+      src: "/manifest-icon-512.png",
+      sizes: "512x512",
+      type: "image/png",
+      purpose: 'any maskable',
+    },
+  ]
+}
+
+const workbox = {
+  runtimeCaching: cachePreset,
+  importScripts: ['sw-import.js'],
+}
+
 const viteConfig = {
   ...(process.env.KEY && process.env.CERT ? {
     server: {
@@ -31,28 +61,8 @@ const viteConfig = {
     Vue(),
     ViteComponents(),
     VitePWA({
-      manifest: {
-        name: 'App',
-        short_name: 'App',
-        background_color: '#212121',
-        theme_color: '#212121',
-        icons: [
-          {
-            "src": "/manifest-icon-192.png",
-            "sizes": "196x196",
-            "type": "image/png",
-          },
-          {
-            "src": "/manifest-icon-512.png",
-            "sizes": "512x512",
-            "type": "image/png",
-          },
-        ]
-      },
-      workbox: {
-        runtimeCaching: cachePreset,
-        importScripts: ['sw-import.js'],
-      }
+      manifest,
+      workbox
     })
   ],
   build: {

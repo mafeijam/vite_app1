@@ -1,6 +1,8 @@
 import axios from 'axios'
 import store from '~/store'
 
+const guestState = localStorage.getItem('guest') || 'n'
+
 const client = axios.create({
   baseURL: '/api',
   withCredentials: true,
@@ -18,7 +20,7 @@ client.interceptors.request.use(config => {
 client.interceptors.response.use(
   response => response,
   error => {
-    if (error.response.status === 401 && store.state.auth.booted) {
+    if (error.response.status === 401 && guestState === 'n') {
       localStorage.setItem('session_expired', '登陸已超時')
 
       return window.location.reload()
