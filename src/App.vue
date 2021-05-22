@@ -14,9 +14,11 @@ export default {
       updateServiceWorker,
     } = useRegisterSW()
 
+    const $q = useQuasar()
+
     watch(needRefresh, val => {
       if (val) {
-        useQuasar().notify({
+        $q.notify({
           message: '發現更新，將於5秒後重新整理頁面',
           position: 'bottom-right',
           icon: 'r_info',

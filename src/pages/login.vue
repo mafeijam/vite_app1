@@ -26,7 +26,7 @@
           q-checkbox(v-model="form.remember" color="orange-14" keep-color dense)
             .text-grey-6.text-weight-medium.q-ml-sm 記住我
           q-btn.text-weight-medium(
-            label="登入" type="submit" color="orange-14" text-color="orange-1"
+            label="登入" type="submit" color="orange-14" text-color="grey-1"
             icon-right="r_login" :loading="loading" :disable="cantSubmit"
           )
 
@@ -64,7 +64,7 @@ export default {
       loading,
       expired,
       errors: computed(() => store.state.errors),
-      cantSubmit: computed(() => !!form.email === false || !!form.password === false),
+      cantSubmit: computed(() => ['email', 'password'].some(k => !!form[k] === false)),
       login: () => {
         callable(() => store.dispatch('auth/login', form))
         expired.value = false

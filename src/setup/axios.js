@@ -3,6 +3,7 @@ import store from '~/store'
 
 const client = axios.create({
   baseURL: '/api',
+  withCredentials: true,
   headers: {
     'X-Requested-With': 'XMLHttpRequest'
   }
@@ -10,6 +11,7 @@ const client = axios.create({
 
 client.interceptors.request.use(config => {
   store.commit('setErrors', null)
+  config.headers['X-Socket-Id'] = store.state.echo?.socketId()
   return config
 }, error => Promise.reject(error))
 

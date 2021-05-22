@@ -16,17 +16,15 @@ const router = createRouter({
 
 let lastPing = Date.now()
 
-router.beforeEach(async (to, from, next) => {
-  await store.dispatch('auth/boot')
-
+router.beforeEach(async (to) => {
   const authRoute = to.matched.some(record => record.meta.auth)
   const guestRoute = to.matched.some(record => record.meta.guest)
   const isLoggedIn = store.state.auth.isLoggedIn
 
   if (authRoute && !isLoggedIn) {
-    return next('/login')
+    return '/login'
   } else if (guestRoute && isLoggedIn) {
-    return next('/')
+    return '/'
   }
 
   const tenMinutesAfter = Date.now() - lastPing >= 600 * 1000
@@ -35,8 +33,6 @@ router.beforeEach(async (to, from, next) => {
     await axios.get('/ping')
     lastPing = Date.now()
   }
-
-  next()
 })
 
 export default router

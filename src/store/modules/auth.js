@@ -1,18 +1,18 @@
 import axios from '~/setup/axios'
 import router from '~/router'
 
-function commitAuth(commit, data) {
+function setUserAndConnectEcho(commit, dispatch, data) {
   commit('setAuth', { isLoggedIn: true, user: data.user })
-  commit('setBooted')
+  dispatch('connectEcho', null, { root: true })
+  dispatch('checkPushSubscription', null, { root: true })
   localStorage.setItem('guest', 'n')
 }
 
 const guestState = localStorage.getItem('guest') || 'n'
 
 const state = {
-  booted: false,
   isLoggedIn: false,
-  user: { name: null }
+  user: { name: null },
 }
 
 const mutations = {
@@ -20,30 +20,26 @@ const mutations = {
     state.isLoggedIn = isLoggedIn
     state.user = user
   },
-  setBooted(state) {
-    state.booted = true
-  },
 }
 
 const actions = {
-  async boot({ commit, state }) {
-    if (guestState === 'y' || state.booted) {
+  async boot({ commit, dispatch }) {
+    if (guestState === 'y') {
       return
     }
 
     try {
       const { data } = await axios.get('/me')
-      commitAuth(commit, data)
+      setUserAndConnectEcho(commit, dispatch, data)
     } catch (e) {
-      commit('setBooted')
       localStorage.setItem('guest', 'y')
     }
   },
-  async login({ commit }, credentials) {
+  async login({ commit, dispatch }, credentials) {
     try {
       await axios.get('/csrf-cookie')
       const { data } = await axios.post('/login', credentials)
-      commitAuth(commit, data)
+      setUserAndConnectEcho(commit, dispatch, data)
       router.push('/')
     } catch (e) {
       commit('setErrors', e.response.data, { root: true })

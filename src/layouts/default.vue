@@ -5,13 +5,14 @@ q-layout(view="hHh lpR fFf")
       q-avatar.cursor-pointer(@click="$router.push('/')")
         img.q-pa-xs(src="/code.svg")
       q-space
+      q-btn.q-mr-sm(icon="r_campaign" flat round dense color="grey-5" @click="broadcast")
       q-btn.q-mr-sm(icon="r_notifications" flat round dense color="grey-5" @click="drawer = !drawer")
         q-badge(rounded floating color="orange-14" label="1")
       q-btn(icon="r_more_vert" flat round dense color="grey-5")
         q-menu.bg-blue-grey-10(anchor="bottom right" self="top right" :offset="[0, 6]" style="width: 200px;")
           q-item
             q-item-section
-              q-item-label.text-orange-14.text-weight-bold.text-uppercase {{ $store.state.auth.user.name }}
+              q-item-label.text-orange-14.text-weight-bold.text-uppercase {{ user.name }}
           q-separator
           q-item(tag="label" v-ripple v-if="!$q.platform.is.ios")
             q-item-section
@@ -38,20 +39,23 @@ q-layout(view="hHh lpR fFf")
         )
           component(:is="Component")
     q-page-sticky(position="bottom-right" :offset="[18, 18]")
-      q-fab(icon="r_widgets" direction="up" color="orange-14" text-color="orange-1")
+      q-fab(icon="r_widgets" direction="up" color="orange-14" text-color="grey-1")
         q-fab-action(icon="r_money" color="blue-7" to="/bank")
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch, inject } from 'vue'
 import { useStore } from 'vuex'
 import { loading, callable } from '~/composable/useLoading'
+import axios from '~/setup/axios'
 
 export default {
   setup() {
     const store = useStore()
 
     const drawer = ref(false)
+
+    const user = computed(() => store.state.auth.user)
 
     const subscription = computed({
       get: () => store.state.isSubscribed,
@@ -60,13 +64,15 @@ export default {
 
     const logout = () => callable(() => store.dispatch('auth/logout'))
 
-    onMounted(() => store.dispatch('checkPushSubscription'))
+    const broadcast = () => axios.post('/broadcast')
 
     return {
       drawer,
       logout,
       loading,
-      subscription
+      subscription,
+      user,
+      broadcast
     }
   }
 }

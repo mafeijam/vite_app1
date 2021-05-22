@@ -1,10 +1,12 @@
 import { createStore, createLogger } from 'vuex'
 import auth from './modules/auth'
 import axios from '~/setup/axios'
+import useEcho from '~/composable/useEcho'
 
 const state = {
   isSubscribed: false,
   subscription: null,
+  echo: null,
   errors: null
 }
 
@@ -12,6 +14,9 @@ const mutations = {
   setSubscription(state, { isSubscribed, subscription }) {
     state.isSubscribed = isSubscribed
     state.subscription = subscription
+  },
+  setEcho(state, echo) {
+    state.echo = echo
   },
   setErrors(state, errors) {
     state.errors = errors
@@ -63,6 +68,10 @@ const actions = {
       })
     }
   },
+  async connectEcho({ commit, state }) {
+    const echo = useEcho(state.auth.user)
+    commit('setEcho', echo)
+  }
 }
 
 const store = createStore({
