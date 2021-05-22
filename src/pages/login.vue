@@ -10,7 +10,8 @@
         q-input(
           v-model="form.email" label="電郵"
           filled label-color="blue-grey-10"
-          color="blue-grey-10" bg-color="blue-grey-3" autofocus
+          color="blue-grey-10" bg-color="blue-grey-3"
+          :autofocus="$q.platform.is.desktop"
         )
           template(#prepend)
             q-icon(name="r_email")

@@ -1,6 +1,7 @@
 import Echo from 'laravel-echo'
 import 'pusher-js'
 import axios from '~/setup/axios'
+import { Notify } from 'quasar'
 
 const authorizer = (channel) => {
   return {
@@ -36,7 +37,15 @@ export default (user) => {
       console.log(notification)
     })
 
-  echo.channel('event').listen('TestEvent', e => console.log(e))
+  echo.channel('event').listen('TestEvent', e => {
+    Notify.create({
+      message: 'Test Event',
+      position: 'top-left',
+      icon: 'r_info',
+      color: 'grey-2',
+      textColor: 'grey-14',
+    })
+  })
 
   return echo
 }
