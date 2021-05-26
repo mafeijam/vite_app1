@@ -69,6 +69,7 @@ const actions = {
     }
   },
   async connectEcho({ commit, state }) {
+    console.log('connecting ws...')
     const echo = useEcho(state.auth.user)
     commit('setEcho', echo)
   }

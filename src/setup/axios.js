@@ -4,7 +4,7 @@ import store from '~/store'
 const guestState = localStorage.getItem('guest') || 'n'
 
 const client = axios.create({
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   withCredentials: true,
   headers: {
     'X-Requested-With': 'XMLHttpRequest'

@@ -16,7 +16,7 @@ const authorizer = (channel) => {
   }
 }
 
-const connect = () => {
+export const connect = () => {
   return new Echo({
     broadcaster: 'pusher',
     key: import.meta.env.VITE_ECHO_KEY,

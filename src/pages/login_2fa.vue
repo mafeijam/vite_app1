@@ -7,6 +7,8 @@
 
     q-card-section.q-pt-none(:class="$q.screen.gt.xs ? 'q-pa-xl' : 'q-pa-lg'")
       q-form(@submit.prevent="login" :class="$q.screen.gt.xs ? 'q-gutter-xl' : 'q-gutter-lg'")
+        .text-h6.text-purple-8.text-center 2FA 登入模式
+
         q-input(
           v-model="form.email" label="電郵"
           filled label-color="blue-grey-10"
@@ -31,12 +33,6 @@
             icon-right="r_login" :loading="loading" :disable="cantSubmit"
           )
 
-        .row.justify-center
-          q-btn(
-            label="使用2FA 登入" color="purple-10" text-color="grey-2"
-            to="/login_2fa" icon-right="r_security"
-          )
-
     q-card-section.text-teal-8.bg-info-trans(v-if="expired" :class="$q.screen.gt.xs ? 'q-pa-xl' : 'q-pa-lg'")
       .flex.items-center
         q-icon(name="r_info_outline" size="1.8em")
@@ -51,12 +47,16 @@
 <script>
 import { computed, reactive, ref } from 'vue'
 import { useStore } from 'vuex'
+import { useQuasar, QSpinnerBars } from 'quasar'
 import useLoading from '~/composable/useLoading'
+import axios from '~/setup/axios'
+import { connect } from '~/composable/useEcho'
 
 export default {
   setup() {
     const store = useStore()
     const { loading, callable } = useLoading()
+    const $q = useQuasar()
 
     const expired = ref(localStorage.getItem('session_expired'))
     localStorage.removeItem('session_expired')
@@ -67,6 +67,37 @@ export default {
       remember: true
     })
 
+    let timer
+
+    const loginFn = async () => {
+      try {
+        let { data } = await axios.post('/2fa', form)
+        window.onbeforeunload = (e) => axios.get('/2fa/beforeunload')
+        $q.loading.show({
+          message: 'Pending 2FA from Telegram',
+          boxClass: 'bg-orange-2 text-orange-14 text-h5 q-pa-xl',
+          spinner: QSpinnerBars,
+          spinnerSize: '5em'
+        })
+        timer = setTimeout(() => {
+          $q.loading.hide()
+          timer = null
+        }, 60 * 10 * 1000)
+
+        const echo = connect()
+        echo.channel(`2fa.${data.token}`).listen('TwoFactorAnswered', async (e) => {
+          await store.dispatch('auth/answer', e.answer)
+          clearTimeout(timer)
+          $q.loading.hide()
+          window.onbeforeunload = null
+          echo.leaveChannel(`2fa.${data.token}`)
+        })
+      } catch (e) {
+        window.onbeforeunload = null
+        store.commit('setErrors', e.response.data)
+      }
+    }
+
     return {
       form,
       loading,
@@ -74,7 +105,7 @@ export default {
       errors: computed(() => store.state.errors),
       cantSubmit: computed(() => ['email', 'password'].some(k => !!form[k] === false)),
       login: () => {
-        callable(() => store.dispatch('auth/login', form))
+        callable(loginFn)
         expired.value = false
       },
     }

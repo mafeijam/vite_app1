@@ -46,7 +46,7 @@ const viteConfig = {
         cert: fs.readFileSync(process.env.CERT)
       },
       proxy: {
-        '/api': 'http://127.0.0.1:8000'
+        '/api': 'http://192.168.50.52:8000'
       }
     }
   } : {}),

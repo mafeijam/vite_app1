@@ -24,6 +24,11 @@ export default [
     component: () => import('~/pages/login.vue')
   },
   {
+    path: '/login_2fa',
+    meta: { guest: true },
+    component: () => import('~/pages/login_2fa.vue')
+  },
+  {
     path: '/:404(.*)*',
     component: () => import('~/pages/404error.vue')
   }

@@ -46,6 +46,16 @@ const actions = {
       localStorage.setItem('guest', 'y')
     }
   },
+  async answer({ commit, dispatch }, answer) {
+    try {
+      const { data } = await axios.get(`/2fa/answered/${answer}`)
+      setUserAndConnectEcho(commit, dispatch, data)
+      router.push('/')
+    } catch (e) {
+      commit('setErrors', e.response.data, { root: true })
+      localStorage.setItem('guest', 'y')
+    }
+  },
   async logout({ commit }) {
     await axios.post('/logout')
     commit('setAuth', { isLoggedIn: false, user: { name: null } })

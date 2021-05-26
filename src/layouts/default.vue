@@ -5,8 +5,8 @@ q-layout(view="hHh lpR fFf")
       q-avatar.cursor-pointer(@click="$router.push('/')")
         img.q-pa-xs(src="/code.svg")
       q-space
-      q-btn.q-mr-sm(icon="r_campaign" flat round dense color="grey-5" @click="broadcast")
-      q-btn.q-mr-sm(icon="r_notifications" flat round dense color="grey-5" @click="drawer = !drawer")
+      q-btn.q-mr-md(icon="r_campaign" flat round dense color="grey-5" @click="broadcast")
+      q-btn.q-mr-md(icon="r_notifications" flat round dense color="grey-5" @click="drawer = !drawer")
         q-badge(rounded floating color="orange-14" label="1")
       q-btn(icon="r_more_vert" flat round dense color="grey-5")
         q-menu.bg-blue-grey-10(anchor="bottom right" self="top right" :offset="[0, 6]" style="width: 200px;")
@@ -44,14 +44,15 @@ q-layout(view="hHh lpR fFf")
 </template>
 
 <script>
-import { ref, computed, onMounted, watch, inject } from 'vue'
+import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
-import { loading, callable } from '~/composable/useLoading'
+import useLoading from '~/composable/useLoading'
 import axios from '~/setup/axios'
 
 export default {
   setup() {
     const store = useStore()
+    const { loading, callable } = useLoading()
 
     const drawer = ref(false)
 

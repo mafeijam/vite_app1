@@ -19,15 +19,16 @@ export default {
     watch(needRefresh, val => {
       if (val) {
         $q.notify({
-          message: '發現更新，將於5秒後重新整理頁面',
+          message: '發現更新，將於3秒後重新整理頁面',
           position: 'bottom-right',
           icon: 'r_info',
           color: 'orange-2',
           textColor: 'orange-14',
-          timeout: 0
+          progress: true,
+          timeout: 3000
         })
 
-        setTimeout(updateServiceWorker, 5000)
+        setTimeout(updateServiceWorker, 3000)
       }
     }, {
       immediate: true
