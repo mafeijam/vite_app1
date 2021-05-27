@@ -71,26 +71,29 @@ export default {
 
     const loginFn = async () => {
       try {
-        let { data } = await axios.post('/2fa', form)
-        window.onbeforeunload = (e) => axios.get('/2fa/beforeunload')
+        let { data } = await axios.post('/2fa/login', form)
+        window.onbeforeunload = (e) => axios.get('/2fa/cancel')
+
         $q.loading.show({
           message: 'Pending 2FA from Telegram',
           boxClass: 'bg-orange-2 text-orange-14 text-h5 q-pa-xl',
           spinner: QSpinnerBars,
           spinnerSize: '5em'
         })
+
         timer = setTimeout(() => {
           $q.loading.hide()
           timer = null
         }, 60 * 10 * 1000)
 
         const echo = connect()
+
         echo.channel(`2fa.${data.token}`).listen('TwoFactorAnswered', async (e) => {
-          await store.dispatch('auth/answer', e.answer)
           clearTimeout(timer)
           $q.loading.hide()
           window.onbeforeunload = null
           echo.leaveChannel(`2fa.${data.token}`)
+          await store.dispatch('auth/answer', e.answer)
         })
       } catch (e) {
         window.onbeforeunload = null

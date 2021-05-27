@@ -2,6 +2,7 @@ import Echo from 'laravel-echo'
 import 'pusher-js'
 import axios from '~/setup/axios'
 import { Notify } from 'quasar'
+import store from '~/store'
 
 const authorizer = (channel) => {
   return {
@@ -16,18 +17,23 @@ const authorizer = (channel) => {
   }
 }
 
-export const connect = () => {
-  return new Echo({
-    broadcaster: 'pusher',
-    key: import.meta.env.VITE_ECHO_KEY,
-    wsHost: import.meta.env.VITE_ECHO_HOST,
-    encrypted: false,
-    forceTLS: true,
-    disableStats: true,
-    authorizer
-  })
-}
+let connected = false
 
+export const connect = () => {
+  if (connected === false) {
+    connected = new Echo({
+      broadcaster: 'pusher',
+      key: import.meta.env.VITE_ECHO_KEY,
+      wsHost: import.meta.env.VITE_ECHO_HOST,
+      encrypted: false,
+      forceTLS: true,
+      disableStats: true,
+      authorizer
+    })
+  }
+
+  return connected
+}
 
 export default (user) => {
   const echo = connect()

@@ -48,7 +48,7 @@ const actions = {
   },
   async answer({ commit, dispatch }, answer) {
     try {
-      const { data } = await axios.get(`/2fa/answered/${answer}`)
+      const { data } = await axios.post('/2fa/answered', { answer })
       setUserAndConnectEcho(commit, dispatch, data)
       router.push('/')
     } catch (e) {
