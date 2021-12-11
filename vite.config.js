@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
-import ViteComponents from 'vite-plugin-components'
+import ViteComponents from 'unplugin-vue-components/vite'
 import { VitePWA, cachePreset } from 'vite-plugin-pwa'
 import AutoImport from 'unplugin-auto-import/vite'
 import dotenv from 'dotenv'
