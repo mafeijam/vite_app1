@@ -8,22 +8,23 @@
     "preview": "vite build && vite preview"
   },
   "dependencies": {
-    "axios": "^0.21.1",
-    "laravel-echo": "^1.10.0",
+    "axios": "^0.21.4",
+    "laravel-echo": "^1.11.0",
     "pusher-js": "^7.0.3",
-    "vue": "^3.0.5",
-    "vue-router": "^4.0.6",
-    "vuex": "^4.0.0"
+    "unplugin-vue-components": "^0.17.8",
+    "vue": "^3.2.24",
+    "vue-router": "^4.0.12",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
-    "@quasar/extras": "^1.10.4",
-    "@vitejs/plugin-vue": "^1.2.2",
-    "@vue/compiler-sfc": "^3.0.5",
+    "@quasar/extras": "^1.12.2",
+    "@vitejs/plugin-vue": "^1.4.0",
+    "@vue/compiler-sfc": "^3.2.4",
     "dotenv": "^10.0.0",
     "pug": "^3.0.2",
-    "quasar": "^2.0.0-beta.15",
+    "quasar": "^2.3.4",
     "vite": "^2.2.3",
-    "vite-plugin-components": "^0.9",
-    "vite-plugin-pwa": "^0.7.3"
+    "vite-plugin-components": "^0.13.3",
+    "vite-plugin-pwa": "^0.11.11"
   }
 }

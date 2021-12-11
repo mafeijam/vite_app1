@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import ViteComponents from 'vite-plugin-components'
 import { VitePWA, cachePreset } from 'vite-plugin-pwa'
+import AutoImport from 'unplugin-auto-import/vite'
 import dotenv from 'dotenv'
 import fs from 'fs'
 import path from 'path'
@@ -63,6 +64,17 @@ const viteConfig = {
     VitePWA({
       manifest,
       workbox
+    }),
+    AutoImport({
+      imports: [
+        'vue',
+        'vue-router',
+        {
+          'quasar': [
+            'useQuasar'
+          ]
+        }
+      ],
     })
   ],
   build: {

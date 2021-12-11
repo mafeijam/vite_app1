@@ -3,9 +3,7 @@ router-view
 </template>
 
 <script>
-import { watch } from 'vue'
 import { useRegisterSW } from 'virtual:pwa-register/vue'
-import { useQuasar } from 'quasar'
 
 export default {
   setup() {

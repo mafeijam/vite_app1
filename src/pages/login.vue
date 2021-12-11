@@ -49,7 +49,6 @@
 </template>
 
 <script>
-import { computed, reactive, ref } from 'vue'
 import { useStore } from 'vuex'
 import useLoading from '~/composable/useLoading'
 
