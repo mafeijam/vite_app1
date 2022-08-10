@@ -43,38 +43,23 @@ q-layout(view="hHh lpR fFf")
         q-fab-action(icon="r_money" color="blue-7" to="/bank")
 </template>
 
-<script>
-import { ref, computed } from 'vue'
-import { useStore } from 'vuex'
+<script setup>
 import useLoading from '~/composable/useLoading'
 import axios from '~/setup/axios'
 
-export default {
-  setup() {
-    const store = useStore()
-    const { loading, callable } = useLoading()
+const store = useStore()
+const { loading, callable } = useLoading()
 
-    const drawer = ref(false)
+const drawer = ref(false)
 
-    const user = computed(() => store.state.auth.user)
+const user = computed(() => store.state.auth.user)
 
-    const subscription = computed({
-      get: () => store.state.isSubscribed,
-      set: val => store.dispatch(val ? 'subscribe' : 'unsubscribe')
-    })
+const subscription = computed({
+  get: () => store.state.isSubscribed,
+  set: val => store.dispatch(val ? 'subscribe' : 'unsubscribe')
+})
 
-    const logout = () => callable(() => store.dispatch('auth/logout'))
+const logout = () => callable(() => store.dispatch('auth/logout'))
 
-    const broadcast = () => axios.post('/broadcast')
-
-    return {
-      drawer,
-      logout,
-      loading,
-      subscription,
-      user,
-      broadcast
-    }
-  }
-}
+const broadcast = () => axios.post('/broadcast')
 </script>

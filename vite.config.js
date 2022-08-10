@@ -69,11 +69,8 @@ const viteConfig = {
       imports: [
         'vue',
         'vue-router',
-        {
-          'quasar': [
-            'useQuasar'
-          ]
-        }
+        'vuex',
+        'quasar'
       ],
     })
   ],

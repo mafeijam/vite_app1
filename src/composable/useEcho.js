@@ -24,6 +24,8 @@ export const connect = () => {
     connected = new Echo({
       broadcaster: 'pusher',
       key: import.meta.env.VITE_ECHO_KEY,
+      // cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+      // forceTLS: true,
       wsHost: import.meta.env.VITE_ECHO_HOST,
       encrypted: false,
       forceTLS: true,
@@ -44,6 +46,7 @@ export default (user) => {
     })
 
   echo.channel('event').listen('TestEvent', e => {
+    console.log(e)
     Notify.create({
       message: 'Test Event',
       position: 'top-left',
